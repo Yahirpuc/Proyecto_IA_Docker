@@ -4,16 +4,32 @@ FROM mcr.microsoft.com/playwright/python:v1.61.0-jammy
 # Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Primero copiamos los requerimientos e instalamos dependencias de Python
-# Esto permite que Docker cachee esta capa y sea más rápido en futuras builds
+# 👇 AGREGA ESTA LÍNEA PARA EVITAR QUE PREGUNTE LA HORA 👇
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Mexico_City
+
+# Instalar dependencias para la pantalla virtual y noVNC
+RUN apt-get update && apt-get install -y \
+    xvfb \
+    x11vnc \
+    novnc \
+    websockify \
+    fluxbox \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiamos requerimientos e instalamos dependencias
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiamos todo el resto del código fuente
 COPY . .
 
-# Exponemos el puerto donde corre FastAPI
-EXPOSE 8000
+# Copiamos el script de inicio y le damos permisos de ejecución
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Comando para ejecutar tu API
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
+# Exponemos el puerto de FastAPI y el puerto de noVNC
+EXPOSE 8000 6080
+
+# Usamos el script como punto de arranque
+CMD ["/entrypoint.sh"]
