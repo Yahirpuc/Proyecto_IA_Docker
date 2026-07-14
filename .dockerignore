@@ -1,0 +1,10 @@
+# .dockerignore
+__pycache__/
+*.pyc
+.venv/
+.git/
+node_modules/
+dist/
+datos/base_vectorial/
+datos/base_relacional/
+.env
