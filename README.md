@@ -71,11 +71,7 @@ qwen2.5:3b-instruct      ...
 
 ---
 
-## Iniciar Ollama
-
-```bash
-ollama serve
-```
+## Iniciar Ollama y Docker
 
 > **Importante**
 >
