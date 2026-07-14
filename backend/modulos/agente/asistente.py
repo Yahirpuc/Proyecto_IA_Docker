@@ -20,10 +20,14 @@ class AsistenteAnaliticoHibrido:
     def __init__(self, ruta_db=os.path.join("datos", "base_vectorial"), nombre_coleccion="reviews_analizadas"):
         host_url = os.getenv("OLLAMA_BASE_URL", "http://host.docker.internal:11434")
         if not os.path.exists(ruta_db):
-            raise FileNotFoundError(f"[ERROR] No se encontró la BD vectorial en '{ruta_db}'.")
+            print(f"[WARN] No se encontró la BD vectorial en '{ruta_db}'. Creando directorio vacío...")
+            os.makedirs(ruta_db, exist_ok=True)
 
         print("[INFO] Cargando modelos locales en memoria (Ollama)...")
-        self.embed_model = OllamaEmbedding(model_name="nomic-embed-text")
+        self.embed_model = OllamaEmbedding(
+            model_name="nomic-embed-text", 
+            base_url=host_url # <-- TE FALTÓ AGREGAR ESTO AQUÍ
+        )
         # Antes tenías: self.llm = Ollama(model="qwen2.5:7b", request_timeout=120.0) esta era el modelo base, pero ahora la cambiamos a una versión más instruccional y afinada para seguir órdenes.
 
         self.llm = Ollama(
