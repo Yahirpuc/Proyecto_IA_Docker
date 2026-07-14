@@ -79,7 +79,7 @@ ollama serve
 
 > **Importante**
 >
-> Ollama debe permanecer ejecutándose durante todo el tiempo que el proyecto esté funcionando.
+> Ollama debe permanecer ejecutándose durante todo el tiempo que el proyecto esté funcionando al igual que docker.
 
 ---
 
