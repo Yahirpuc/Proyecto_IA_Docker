@@ -71,15 +71,11 @@ qwen2.5:3b-instruct      ...
 
 ---
 
-## Iniciar Ollama
-
-```bash
-ollama serve
-```
+## Iniciar Ollama y Docker
 
 > **Importante**
 >
-> Ollama debe permanecer ejecutándose durante todo el tiempo que el proyecto esté funcionando.
+> Ollama debe permanecer ejecutándose durante todo el tiempo que el proyecto esté funcionando al igual que docker.
 
 ---
 

@@ -4,6 +4,7 @@ services:
     user: "0:0"
     ports:
       - "8000:8000"
+      - "6080:6080"
     volumes:
       - ./backend/datos:/app/datos
     extra_hosts:

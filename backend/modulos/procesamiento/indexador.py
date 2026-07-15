@@ -12,8 +12,14 @@ class IndexadorRAG:
         self.ruta_db = ruta_db
         self.nombre_coleccion = nombre_coleccion
         
-        # Configuramos el modelo de embeddings local de Ollama
-        self.embed_model = OllamaEmbedding(model_name="nomic-embed-text")
+        # 👇 NUEVO: Capturar la URL desde las variables de entorno
+        url_ollama = os.getenv("OLLAMA_BASE_URL", "http://host.docker.internal:11434")
+        
+        # 👇 NUEVO: Pasar el base_url explícitamente
+        self.embed_model = OllamaEmbedding(
+            model_name="nomic-embed-text",
+            base_url=url_ollama
+        )
 
     def construir_indice(self, archivo_enriquecido="reseñas_enriquecidas.json"):
         """Lee el JSON enriquecido por la IA y lo monta en ChromaDB limpiando registros viejos."""

@@ -165,28 +165,30 @@ export default function ModalCargarProducto({ estaAbierto, alCerrar, alCompletar
 
             {/* 2. PANTALLA DE CARGA CON LOADER GRANDE E ICONOS DINÁMICOS */}
             {cargando && (
-              <div className="flex flex-col items-center justify-center space-y-8 text-center animate-fadeIn">
-
-                {/* Loader Unificado Gigante */}
-                <div className="relative flex items-center justify-center w-24 h-24">
-                  {/* Círculo de Carga Exterior */}
-                  <div className="absolute inset-0 border-4 border-neutral-800 border-t-indigo-500 rounded-full animate-spin"></div>
-                  {/* Contenedor central para el icono cambiante */}
-                  <div className="absolute bg-[#161616] w-12 h-12 rounded-2xl border border-neutral-800 flex items-center justify-center shadow-inner animate-fadeIn" key={pasoActual}>
+              <div className="flex flex-col items-center justify-start w-full h-full space-y-4 animate-fadeIn">
+                
+                {/* Cabecera dinámica de estado */}
+                <div className="flex items-center gap-3 bg-neutral-900/80 px-5 py-3 rounded-2xl border border-neutral-800 w-full shadow-md">
+                  <div className="animate-pulse" key={`icon-${pasoActual}`}>
                     {PASOS_CARGA[pasoActual].icono}
                   </div>
-                </div>
-
-                <div className="space-y-3 max-w-md">
-                  {/* Texto descriptivo de la fase actual */}
-                  <h3 className="text-lg font-bold text-neutral-200 min-h-[56px] flex items-center justify-center px-4 transition-all duration-300" key={`text-${pasoActual}`}>
+                  <h3 className="text-sm font-bold text-neutral-200 transition-all duration-300" key={`text-${pasoActual}`}>
                     {PASOS_CARGA[pasoActual].texto}
                   </h3>
-                  <p className="text-xs text-neutral-500 tracking-widest uppercase font-mono animate-pulse">Sincronizando sistema...</p>
                 </div>
 
-                <p className="text-base text-neutral-400 max-w-lg leading-relaxed bg-neutral-900/60 p-5 border border-neutral-800 rounded-2xl">
-                  Por favor, mantén esta ventana abierta. Nuestro sistema abrirá una ventana del navegador en segundo plano en el servidor para recopilar, ordenar y guardar los comentarios necesarios. Esto tomará solo un momento.
+                {/* CONTENEDOR DEL IFRAME (El navegador en vivo) */}
+                <div className="w-full flex-1 relative rounded-2xl overflow-hidden border border-neutral-800 bg-black shadow-inner min-h-[350px]">
+                  <iframe 
+                    src="http://localhost:6080/vnc.html?autoconnect=true&resize=scale" 
+                    className="w-full h-full absolute inset-0"
+                    style={{ border: 'none' }}
+                    title="Navegador IA en vivo"
+                  />
+                </div>
+
+                <p className="text-xs text-neutral-500 tracking-widest uppercase font-mono animate-pulse pt-2">
+                  🔴 Transmitiendo proceso en vivo...
                 </p>
               </div>
             )}
