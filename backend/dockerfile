@@ -8,6 +8,8 @@ WORKDIR /app
 # Esto permite que Docker cachee esta capa y sea más rápido en futuras builds
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+# 👇 AGREGA ESTA LÍNEA PARA ASEGURAR QUE LOS BINARIOS ESTÉN LISTOS 👇
+RUN playwright install chromium && playwright install-deps chromium
 
 # Copiamos todo el resto del código fuente
 COPY . .

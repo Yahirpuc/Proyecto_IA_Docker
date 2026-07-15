@@ -3,6 +3,8 @@ import json
 import os
 from datetime import datetime
 from playwright.sync_api import sync_playwright
+# Cambia 'import playwright_stealth' por esta línea:
+from playwright_stealth.stealth import Stealth
 
 class ExtractorEspecifico:
     # Corrección de inicialización por defecto para asegurar la persistencia cruda
@@ -49,9 +51,20 @@ class ExtractorEspecifico:
                 user_data_dir=ruta_perfil,
                 headless=False,
                 viewport={"width": 1280, "height": 900},
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                args=["--disable-blink-features=AutomationControlled"],
+                ignore_default_args=["--enable-automation"]
             )
             page = context.new_page()
+            # --- AGREGAR ESTO ---
+            # --- CAMBIA ESTO ---
+            # ... después de page = context.new_page()
+            
+            # Usa la función directamente:
+            stealth_config = Stealth()
+            # 2. Aplicamos el sigilo usando el método de instancia
+            stealth_config.apply_stealth_sync(page)
+            # --------------------
             
             try:
                 page.goto(url, wait_until="domcontentloaded", timeout=60000)
