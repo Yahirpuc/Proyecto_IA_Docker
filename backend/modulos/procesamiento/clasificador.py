@@ -8,9 +8,11 @@ import asyncio
 
 class ClasificadorReseñas:
     # Por defecto usamos el modelo optimizado que configuramos
-    def __init__(self, modelo="qwen2.5:5b"):
+    def __init__(self, modelo="qwen2.5:7b"):
+        host_url = os.getenv("OLLAMA_BASE_URL", "http://host.docker.internal:11434")
         self.llm = Ollama(
             model=modelo, 
+            base_url=host_url,
             request_timeout=60.0, 
             additional_kwargs={"format": "json"}
         )

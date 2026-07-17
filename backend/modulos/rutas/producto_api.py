@@ -72,15 +72,15 @@ async def cargar_nuevo_producto(peticion: PeticionNuevoProducto, request: Reques
                         time.sleep(1.0)
 
         # Intento seguro de borrado de la carpeta completa de ChromaDB
-        if os.path.exists(ruta_db_local):
-            for intento in range(4):
-                try:
-                    shutil.rmtree(ruta_db_local)
-                    print("[PIPELINE] Base vectorial anterior eliminada por completo (ChromaDB purgado).")
-                    break
-                except PermissionError:
-                    print(f"[PIPELINE] Carpeta bloqueada por Windows. Reintentando purga ({intento+1}/4)...")
-                    time.sleep(1.5)
+        # if os.path.exists(ruta_db_local):
+        #     for intento in range(4):
+        #         try:
+        #             shutil.rmtree(ruta_db_local)
+        #             print("[PIPELINE] Base vectorial anterior eliminada por completo (ChromaDB purgado).")
+        #             break
+        #         except PermissionError:
+        #             print(f"[PIPELINE] Carpeta bloqueada por Windows. Reintentando purga ({intento+1}/4)...")
+        #             time.sleep(1.5)
         
         # Recrear la estructura de carpetas completamente vacías
         os.makedirs(os.path.join("datos", "crudos"), exist_ok=True)
